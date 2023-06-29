@@ -80,8 +80,9 @@ export default class Run extends Command {
     }
 
     input.on('message', (delta, message) => {
-      if (channel && channel !== (message[0] & 0x0F)) {
+      if (channel !== undefined && channel !== (message[0] & 0x0F)) {
         this.log(`Ignored message on channel ${message[0] & 0x0F}`)
+        return
       }
 
       if (delta > 1) this.log('')
