@@ -1,4 +1,4 @@
-import {Args, Command} from '@oclif/core'
+import {Args, Flags, Command} from '@oclif/core'
 import {Input, Output} from 'midi'
 import {isEqual} from 'lodash'
 
@@ -39,11 +39,21 @@ export default class Run extends Command {
   static examples = ['$ oex run --device X-TOUCH MINI']
 
   static args = {
-    deviceName: Args.string({description: 'The name of the device for which to listen for midi messages', required: true}),
+    deviceName: Args.string({
+      description: 'The name of the device for which to listen for midi messages',
+      required: true,
+    }),
+  }
+
+  static flags = {
+    channel: Flags.integer({
+      description: 'The channel on which to listen to',
+      required: false,
+    }),
   }
 
   async run(): Promise<void> {
-    const {args: {deviceName}} = await this.parse(Run)
+    const {args: {deviceName}, flags: {channel}} = await this.parse(Run)
 
     const input = new Input()
 
@@ -70,6 +80,10 @@ export default class Run extends Command {
     }
 
     input.on('message', (delta, message) => {
+      if (channel && channel !== (message[0] & 0x0F)) {
+        this.log(`Ignored message on channel ${message[0] & 0x0F}`)
+      }
+
       if (delta > 1) this.log('')
       this.log(`Receive: ${message} (${delta})`)
       processor.process(delta, message, sendMessage)
