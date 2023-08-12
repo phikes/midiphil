@@ -28,7 +28,7 @@
     "@types/chai": "^4",
     "@types/midi": "^2.0.0",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.18.36",
+    "@types/node": "^16.18.40",
     "chai": "^4",
     "eslint": "^7.32.0",
     "eslint-config-oclif": "^4",
