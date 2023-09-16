@@ -24,7 +24,7 @@
     "midi": "^2.0.0"
   },
   "devDependencies": {
-    "@oclif/test": "^2.3.23",
+    "@oclif/test": "^2.5.4",
     "@types/chai": "^4",
     "@types/midi": "^2.0.0",
     "@types/mocha": "^9.0.0",
